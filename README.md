@@ -71,10 +71,14 @@ pip install -r requirements.txt
    }
      ```
 
-5. Start the server:
+5. Start the server on the command line:
    ```
    python3 mcp_server.py --transport streamable-http --port 8000
    ```
+
+6. If on VS Code, click on start just above your MCP configuration. Then, open a new GitHub Copilot window, and click on "Configure Tools." You should see the `jenkins-mcp` tool available. Make sure to check it (see below)!
+
+<img src="https://github.com/user-attachments/assets/b144c491-cb08-420e-b780-17e90f09cdc1" width="700" />
 
 ## Usage
 
