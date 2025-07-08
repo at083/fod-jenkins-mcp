@@ -166,4 +166,4 @@ get_whoami()
 - All input is validated and sanitized.
 - Batch operations are parallelized for efficiency but never leak sensitive data.
 
-## Note: Testing for this MCP is still underway. Please report any and all issues encountered.
+## Note: Testing for this MCP is still underway. Please report any and all issues encountered!
