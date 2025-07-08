@@ -60,41 +60,43 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Example Prompts for Copilot/LLMs
+Enable the MCP and prompt away! Some actions may/will require some hand-holding; be sure to specify exactly what it is you would like your agent to perform so that the appropriate tool is called (e.g. "Find the latest the emulation/zemulation_nightly build on Jenkins that failed and look through the last 1000 lines of the console output for this build to see what went wrong."). Some environments/agents allow for prompt file creation—try documenting your workflow by asking the agent to "save this workflow to a prompt file" after the task is complete and then calling the file for future workflows so the agent knows how to handle it!
+
+### The following tools are supported (and still experimental):
 
 #### Get info for a single job
 ```
-get_job_info(job_name="emulation/fun_on_demand")
+get_job_info(job_name="emulation/XXX")
 ```
 
 #### Get info for multiple jobs
 ```
-get_multiple_job_info(job_names=["emulation/fun_on_demand", "emulation/zemulation_nightly"])
+get_multiple_job_info(job_names=["emulation/XXX", "emulation/XXX"])
 ```
 
 #### Get info for a single build
 ```
-get_build_info(job_name="emulation/fun_on_demand", build_number=170456)
+get_build_info(job_name="emulation/XXX", build_number=XXX)
 ```
 
 #### Get info for multiple builds
 ```
-get_multiple_build_info(job_build_pairs=[{"job_name": "emulation/fun_on_demand", "build_number": 170456}, {"job_name": "emulation/zemulation_nightly", "build_number": 376258}])
+get_multiple_build_info(job_build_pairs=[{"job_name": "emulation/XXX", "build_number": XXXXXX}, {"job_name": "emulation/XXX", "build_number": XXXXXX}])
 ```
 
-#### Get last 1000 lines of console output for a build
+#### Get last X lines of console output for a build
 ```
-get_build_console_output(job_name="emulation/zemulation_nightly", build_number=376258, mode="tail", num_lines=1000)
+get_build_console_output(job_name="emulation/XXX", build_number=XXXXXX, mode="tail", num_lines=XXX)
 ```
 
 #### Search for "Exception" in console output
 ```
-get_build_console_output(job_name="emulation/zemulation_nightly", build_number=376258, search="Exception")
+get_build_console_output(job_name="emulation/XXX", build_number=XXXXXX, search="Exception")
 ```
 
 #### Get test report for a build
 ```
-get_build_test_report(job_name="emulation/fun_on_demand", build_number=170456)
+get_build_test_report(job_name="emulation/XXX", build_number=XXXXXX)
 ```
 
 #### Get all jobs
@@ -119,7 +121,7 @@ get_queue_info()
 
 #### Cancel a queue item
 ```
-cancel_queue(queue_id=12345)
+cancel_queue(queue_id=XXXXX)
 ```
 
 #### Get all plugins
@@ -142,6 +144,8 @@ get_version()
 get_whoami()
 ```
 
+### 
+
 ## Troubleshooting
 - **422 Unprocessable Entity:** Ensure your request matches the tool’s schema.
 - **Authentication Errors:** Check your `.env` or environment variables for correct Jenkins credentials.
@@ -161,3 +165,5 @@ get_whoami()
 - Credentials are never returned or echoed.
 - All input is validated and sanitized.
 - Batch operations are parallelized for efficiency but never leak sensitive data.
+
+## Note: Testing for this MCP is still underway. Please report any and all issues encountered.
