@@ -4,7 +4,7 @@
 - [Installation & Getting Started](#installation--getting-started)
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
-- [Samples & Best Practices](#samples--best-practices)
+- [Best Practices](#best-practices)
 
 ## Overview
 Jenkins MCP exposes Jenkins operations as schema-validated tools for AI agents and automation. It supports batch, windowed, and context-aware operations, and is designed for tight integration with Jenkins with Fungible DPU workflows in mind.
@@ -153,7 +153,7 @@ get_whoami()
 - **Tool Not Found:** Ensure you are calling a registered tool (see Supported Tools).
 - **Debugging:** Set `JENKINS_MCP_DEBUG=1` in your environment to enable debug logging.
 
-## Samples & Best Practices
+## Best Practices
 - Always use windowed log access for large builds.
 - Use batch tools for efficiency when querying multiple jobs/builds.
 - Check `total_lines` and `next_window_suggestion` in log responses to guide further requests.
