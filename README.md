@@ -60,9 +60,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-Enable the MCP and prompt away! Some actions may/will require some hand-holding; be sure to specify exactly what it is you would like your agent to perform so that the appropriate tool is called (e.g. "Find the latest the emulation/zemulation_nightly build on Jenkins that failed and look through the last 1000 lines of the console output for this build to see what went wrong."). Some environments/agents allow for prompt file creation—try documenting your workflow by asking the agent to "save this workflow to a prompt file" after the task is complete and then calling the file for future workflows so the agent knows how to handle it!
-
-### The following tools are supported (and still experimental):
+Enable the MCP and prompt away! Some actions may/will require some hand-holding; be sure to specify exactly what it is you would like your agent to perform so that the appropriate tool is called (e.g. "Find the latest the emulation/zemulation_nightly build on Jenkins that failed and look through the last 1000 lines of the console output for this build to see what went wrong."). All tools are still experimental. Some environments/agents allow for prompt file creation—try documenting your workflow by asking the agent to "save this workflow to a prompt file" after the task is complete and then calling the file for future workflows so the agent knows how to handle it!
 
 #### Get info for a single job
 ```
