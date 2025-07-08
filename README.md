@@ -1,7 +1,3 @@
-# Jenkins MCP
-
-This package exposes Jenkins operations as structured, schema-validated MCP tools for LLMs, Copilot, and automation agents.
-
 ## Table of Contents
 - [Overview](#overview)
 - [Supported Tools](#supported-tools)
@@ -11,7 +7,7 @@ This package exposes Jenkins operations as structured, schema-validated MCP tool
 - [Samples & Best Practices](#samples--best-practices)
 
 ## Overview
-Jenkins MCP exposes Jenkins operations as schema-validated tools for AI agents and automation. It supports batch, windowed, and context-aware operations, and is designed for robust, secure, and efficient integration with Jenkins.
+Jenkins MCP exposes Jenkins operations as schema-validated tools for AI agents and automation. It supports batch, windowed, and context-aware operations, and is designed for tight integration with Jenkins with Fungible DPU workflows in mind.
 
 ## Supported Tools
 | Tool Name                        | Description                                         |
@@ -53,9 +49,9 @@ pip install -r requirements.txt
 1. Clone the repo and `cd` into it.
 2. Set Jenkins credentials in `.env` or as environment variables:
    ```
-   JENKINS_URL=http://jenkins-server/ci
+   JENKINS_URL=http://jenkins-sw-master.fungible.local/ci/
    JENKINS_USERNAME=your-username
-   JENKINS_API_TOKEN=your-api-token
+   JENKINS_API_TOKEN=your-password
    ```
 3. Start the server:
    ```
