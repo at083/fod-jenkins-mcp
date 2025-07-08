@@ -46,14 +46,32 @@ pip install -r requirements.txt
 ```
 
 ### Setup
+
+#### Note: For information on getting GitHub Copilot working with an enterprise account and setting up MCPs, see [Everything AI](https://microsoft.sharepoint.com/:u:/r/teams/FungibleDPU/SitePages/Everything-AI.aspx?csf=1&web=1&e=qnU0iB).
+
 1. Clone the repo and `cd` into it.
-2. Set Jenkins credentials in `.env` or as environment variables:
+
+3. Set Jenkins credentials in `.env` or as environment variables:
    ```
    JENKINS_URL=http://jenkins-sw-master.fungible.local/ci/
    JENKINS_USERNAME=your-username
    JENKINS_API_TOKEN=your-password
    ```
-3. Start the server:
+
+4. If using VS Code:
+   - Open the command palette (either with F1 or Ctrl+Shift+P)
+   - Type "open user settings"
+   - You'll be presented with a few options, choose Open User Settings (JSON)
+   - Add the following snippet under mcp > servers:
+  
+   ```
+   "jenkins-mcp": {
+      "type": "http",
+      "url": "http://127.0.0.1:8000/mcp/"
+   }
+     ```
+
+5. Start the server:
    ```
    python3 mcp_server.py --transport streamable-http --port 8000
    ```
