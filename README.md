@@ -216,7 +216,7 @@ get_build_console_output(job_name="emulation/zemulation_nightly", build_number=3
 
 ## Prompt Workflows
 
-This repository includes a set of prompt workflow files that provide step-by-step guidance for common FoD and Jenkins MCP workflows. These are designed for use with Copilot, LLMs, or any agent that supports prompt-driven automation. Users can to use these prompts as starting points or create their own.
+This repository includes a set of [prompt workflow files](./.github/prompts) that provide step-by-step guidance for common FoD and Jenkins MCP workflows. These are designed for use with Copilot, LLMs, or any agent that supports prompt-driven automation. Users can to use these prompts as starting points or create their own.
 
 Environments typically allow for prompt file creation. Try documenting your workflow by asking the agent to "save this workflow to a prompt file" after the task is complete and then calling the file for future workflows so the agent knows how to handle it!
 
