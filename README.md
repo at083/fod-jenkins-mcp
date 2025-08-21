@@ -92,7 +92,7 @@ pip install -r requirements.txt
 
 #### Note: For information on getting GitHub Copilot working with an enterprise account and setting up MCPs, see [Everything AI](https://microsoft.sharepoint.com/:u:/r/teams/FungibleDPU/SitePages/Everything-AI.aspx?csf=1&web=1&e=qnU0iB).
 
-1. Clone the repo.
+1. Clone the repo and `cd` into it.
 
 3. Set FoD and Jenkins credentials in `.env` or as environment variables:
    ```
@@ -121,7 +121,7 @@ pip install -r requirements.txt
 
 5. Start the server on the command line from your workspace:
    ```
-   python3 -m fod_jenkins:mcp_server --transport streamable-http --port 8000
+   python3 -m mcp_server --transport streamable-http --port 8000
    ```
 
 6. If on VS Code, click on start just above your MCP configuration or open your extensions pallete (Ctrl+Shift+X) and find `fod-jenkins` under **MCP SERVERS - INSTALLED**. Click on "Start Server":
