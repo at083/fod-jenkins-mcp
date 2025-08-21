@@ -119,7 +119,8 @@ pip install -r requirements.txt
    }
      ```
 
-5. Start the server on the command line from your workspace:
+5. Start the server on the command line from your workspace. Make sure Python is able to look for modules and packages in your workspace (set PYTHONPATH variable).
+
    ```
    python3 -m mcp_server --transport streamable-http --port 8000
    ```
