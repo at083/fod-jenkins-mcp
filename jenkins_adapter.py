@@ -45,13 +45,6 @@ def get_job_info(job_name):
     except jenkins.JenkinsException as e:
         return {"error": {"code": "jenkins_error", "message": str(e)}, "summary": f"Failed to fetch job info for '{job_name}'."}
 
-def build_job(job_name, parameters=None):
-    try:
-        queue_id = server.build_job(job_name, parameters=parameters)
-        return {"queue_id": queue_id, "summary": f"Triggered build for job '{job_name}'."}
-    except jenkins.JenkinsException as e:
-        return {"error": {"code": "jenkins_error", "message": str(e)}, "summary": f"Failed to trigger build for '{job_name}'."}
-
 def get_build_info(job_name, build_number):
     try:
         info = server.get_build_info(job_name, build_number)
@@ -60,7 +53,7 @@ def get_build_info(job_name, build_number):
         return {"error": {"code": "jenkins_error", "message": str(e)}, "summary": f"Failed to fetch build info for '{job_name}' build #{build_number}."}
 
 def get_build_console_output(job_name, build_number, start_line=None, num_lines=None, search=None, handle=None, session_id=None, mode=None):
-    from jenkins_mcp.utils import log_debug
+    from fod_jenkins.utils import log_debug
     _cleanup_console_log_cache()
     cache_key = handle or _get_log_handle(session_id, job_name, build_number)
     lines = None
@@ -76,7 +69,6 @@ def get_build_console_output(job_name, build_number, start_line=None, num_lines=
                 return {"error": {"code": "jenkins_error", "message": str(e)}, "summary": f"Failed to fetch console output for '{job_name}' build #{build_number}."}
     total_lines = len(lines)
     log_debug(f"Adapter: job_name={job_name}, build_number={build_number}, start_line={start_line}, num_lines={num_lines}, search={search}, handle={handle}, total_lines={total_lines}, mode={mode}")
-    # use provided values or fallback to safe defaults
     start_line = int(start_line) if start_line is not None else 0
     num_lines = int(num_lines) if num_lines is not None else 100
     # mode support
@@ -146,33 +138,12 @@ def cancel_queue(queue_id):
     except jenkins.JenkinsException as e:
         return {"error": {"code": "jenkins_error", "message": str(e)}, "summary": f"Failed to cancel queue item {queue_id}."}
 
-def get_nodes():
-    try:
-        nodes = server.get_nodes()
-        return {"nodes": nodes, "summary": "Fetched all nodes."}
-    except jenkins.JenkinsException as e:
-        return {"error": {"code": "jenkins_error", "message": str(e)}, "summary": "Failed to fetch nodes."}
-
-def get_node_info(node_name):
-    try:
-        info = server.get_node_info(node_name)
-        return {"node": info, "summary": f"Fetched info for node '{node_name}'."}
-    except jenkins.JenkinsException as e:
-        return {"error": {"code": "jenkins_error", "message": str(e)}, "summary": f"Failed to fetch node info for '{node_name}'."}
-
 def get_plugins():
     try:
         plugins = server.get_plugins()
         return {"plugins": plugins, "summary": "Fetched all plugins."}
     except jenkins.JenkinsException as e:
         return {"error": {"code": "jenkins_error", "message": str(e)}, "summary": "Failed to fetch plugins."}
-
-def get_views():
-    try:
-        views = server.get_views()
-        return {"views": views, "summary": "Fetched all views."}
-    except jenkins.JenkinsException as e:
-        return {"error": {"code": "jenkins_error", "message": str(e)}, "summary": "Failed to fetch views."}
 
 def get_version():
     try:
@@ -187,6 +158,7 @@ def get_whoami():
         return {"whoami": whoami, "summary": "Fetched authenticated user info."}
     except jenkins.JenkinsException as e:
         return {"error": {"code": "jenkins_error", "message": str(e)}, "summary": "Failed to fetch user info."}
+
 def get_multiple_job_info(job_names):
     results = []
     for job_name in job_names:
@@ -196,6 +168,7 @@ def get_multiple_job_info(job_names):
         except jenkins.JenkinsException as e:
             results.append({"job_name": job_name, "job": None, "error": {"code": "jenkins_error", "message": str(e)}})
     return {"results": results, "summary": f"Fetched info for {len(job_names)} jobs."}
+
 def get_multiple_build_info(job_build_pairs):
     results = []
     errors = []
@@ -210,20 +183,6 @@ def get_multiple_build_info(job_build_pairs):
         results = list(executor.map(fetch, job_build_pairs))
     partial_failure = any(r["error"] for r in results)
     return {"results": results, "partial_failure": partial_failure, "summary": f"Fetched build info for {len(job_build_pairs)} builds."}
-
-def get_multiple_build_console_output(job_build_pairs):
-    results = []
-    def fetch(pair):
-        job_name, build_number = pair["job_name"], pair["build_number"]
-        try:
-            output = server.get_build_console_output(job_name, build_number)
-            return {"job_name": job_name, "build_number": build_number, "console": output, "error": None}
-        except jenkins.JenkinsException as e:
-            return {"job_name": job_name, "build_number": build_number, "console": None, "error": {"code": "jenkins_error", "message": str(e)}}
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        results = list(executor.map(fetch, job_build_pairs))
-    partial_failure = any(r["error"] for r in results)
-    return {"results": results, "partial_failure": partial_failure, "summary": f"Fetched console output for {len(job_build_pairs)} builds."}
 
 def get_build_test_report(job_name, build_number):
     try:
@@ -245,3 +204,17 @@ def get_multiple_build_test_report(job_build_pairs):
         results = list(executor.map(fetch, job_build_pairs))
     partial_failure = any(r["error"] for r in results)
     return {"results": results, "partial_failure": partial_failure, "summary": f"Fetched test reports for {len(job_build_pairs)} builds."}
+
+def copy_job(from_name, to_name, session_id=None):
+    try:
+        server.copy_job(from_name, to_name)
+        return {"success": True, "summary": f"Copied job from {from_name} to {to_name}."}
+    except jenkins.JenkinsException as e:
+        return {"success": False, "error": {"code": "jenkins_error", "message": str(e)}, "summary": f"Failed to copy job from {from_name} to {to_name}."}
+
+def get_executors(session_id=None):
+    try:
+        executors = server.get_executors()
+        return {"executors": executors, "summary": "Fetched Jenkins executors."}
+    except jenkins.JenkinsException as e:
+        return {"executors": None, "error": {"code": "jenkins_error", "message": str(e)}, "summary": "Failed to fetch Jenkins executors."}
